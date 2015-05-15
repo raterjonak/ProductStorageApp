@@ -130,6 +130,8 @@ namespace ProductStorageApp
             connection.Open();
             SqlDataReader reader = command.ExecuteReader();
             List<Product> productList = new List<Product>();
+
+            int totalQuantity=0;
             while (reader.Read())
             {
                 Product product = new Product();
@@ -137,9 +139,12 @@ namespace ProductStorageApp
                 product.description = reader["description"].ToString();
                 product.quantity = int.Parse(reader["quantity"].ToString());
                 productList.Add(product);
+
+                totalQuantity += product.quantity;
             }
 
             LoadAllEmployeeListView(productList);
+            totalTextBox.Text = totalQuantity.ToString();
         }
 
         public void LoadAllEmployeeListView(List<Product> products)
@@ -159,6 +164,8 @@ namespace ProductStorageApp
         private void showButton_Click(object sender, EventArgs e)
         {
             ShowAllProduct();
+
+           
         }
     }
 }
